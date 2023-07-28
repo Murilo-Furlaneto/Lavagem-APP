@@ -69,7 +69,9 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 5),
                   Text(
                     'Olá, ${widget.nome}',
-                    style: const TextStyle(fontSize: 22),
+                    style: const TextStyle(
+                      fontSize: 19,
+                    ),
                   ),
                   const Spacer(),
                   IconButton(
@@ -170,12 +172,26 @@ class _HomePageState extends State<HomePage> {
                                     )),
                                 IconButton(
                                     onPressed: () async {
-                                      _firebaseStore
-                                          .doc(veiculoModel.id)
-                                          .delete();
-                                      await _notification_service
-                                          .removerVeiculoFinalizado(
-                                              veiculoModel.placa);
+                                      if (widget.nome.toLowerCase() ==
+                                              'fabio zignari' ||
+                                          widget.nome.toLowerCase() ==
+                                              'fabio') {
+                                        _firebaseStore
+                                            .doc(veiculoModel.id)
+                                            .delete();
+                                        await _notification_service
+                                            .removerVeiculoFinalizado(
+                                                veiculoModel.placa);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Você não tem acesso a essa funcionalidade.'),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
                                     },
                                     icon: const Icon(
                                       Icons.delete,

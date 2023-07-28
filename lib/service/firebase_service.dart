@@ -11,6 +11,26 @@ import '../pages/sign_up_page.dart';
 class FirebaseService {
   final _firebaseAuth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
+  Future<void> resetSenha(
+      {required String email, required BuildContext context}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Link enviado para o seu email'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? ''),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   Future<void> cadastrar(
       {required String nome,

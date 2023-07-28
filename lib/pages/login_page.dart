@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/pages/sign_up_page.dart';
 
 import '../service/firebase_service.dart';
 
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 35),
+                    padding: const EdgeInsets.only(bottom: 30),
                     child: Center(
                       child: Image.asset(
                         'assets/images/honda.png',
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -77,7 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || value.trim().isEmpty) {
                         return 'O campo precisa ser preenchido';
                       } else if (value.length < 5) {
-                        return 'O campo senha precisa conter mais que 5 caracteres';
+                        return 'O campo email precisa conter mais que 5 caracteres';
+                      } else if (!value.contains('.com') ||
+                          !value.contains('@')) {
+                        return 'O campo email deve conter o @ e ".com"';
                       }
                       return null;
                     },
@@ -104,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 25),
                   SizedBox(
-                    height: 50,
+                    height: 45,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -127,6 +131,26 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        _service.resetSenha(
+                            email: _emailController.text, context: context);
+                      },
+                      child: const Text('Esqueceu a senha?',
+                          style: TextStyle(color: Colors.red, fontSize: 15))),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpPage()),
+                            (route) => false);
+                      },
+                      child: const Text('Não tem uma conta? Cadastre-se',
+                          style: TextStyle(color: Colors.black, fontSize: 15)))
                 ],
               ),
             ),

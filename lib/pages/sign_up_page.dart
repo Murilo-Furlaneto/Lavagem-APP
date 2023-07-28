@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/pages/login_page.dart';
 import '../service/firebase_service.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 50),
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -126,6 +127,16 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (route) => false);
+                      },
+                      child: const Text('Já possui cadastro? Faça login',
+                          style: TextStyle(color: Colors.black)))
                 ],
               ),
             ),
