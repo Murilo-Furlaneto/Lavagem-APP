@@ -1,6 +1,6 @@
 # lavagem_app
 
-O intuito deste projeto era resolver o problema da organização dos veiculos que era realizado por meio do Whatsaap, o projeto tinha como objetivo solucionar esse problema e trazer de maneira mais clara e facilitada para o usuário como organizar os veiculos mediante os processos dos veículos. O aplicativo conta com funcionalidades para adicionar um cadastro do veículo, o status atual e quando o carro estiver pronto o aplicativo envia uma notificação no celular para avisar, foram também definidas regras de segurança permitindo acesso apenas a algumas pessoas, com o intuito de evitar que outras pessoas possam de alguma maneira prejudiciar o funcionamento.
+Este projeto visa resolver o problema de organização de veículos anteriormente conduzido através do WhatsApp. A solução proposta simplifica e esclarece o processo de organização veicular para os usuários. O aplicativo oferece funcionalidades que incluem o cadastro do veículo, acompanhamento do status atual e notificações quando o veículo estiver pronto. Além disso, foram implementadas regras de segurança para restringir o acesso a um grupo selecionado de pessoas, visando evitar interferências prejudiciais ao funcionamento do sistema.
 
 ## Telas do Dispositivo
 ![Captura de tela 2023-07-19 200208](https://github.com/Murilo-Furlaneto/Lavagem-APP/assets/64844221/2b7d2b0c-ef46-4ccf-a48a-d2d8c4e53ffd)
