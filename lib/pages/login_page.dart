@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/controller/provider/user_controller.dart';
 import 'package:lavagem_app/pages/sign_up_page.dart';
 
 import '../service/firebase_service.dart';
@@ -14,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   final _nomeController = TextEditingController();
-  final _service = FirebaseService();
+  final _controller = UserController();
   bool isObscure = true;
 
   @override
@@ -115,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: Colors.grey[300],
                       ),
                       onPressed: () {
-                        _service.login(
+                        _controller.login(
                             nome: _nomeController.text,
                             email: _emailController.text,
                             senha: _senhaController.text,
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                       onPressed: () {
-                        _service.resetSenha(
+                        _controller.resetarSenha(
                             email: _emailController.text, context: context);
                       },
                       child: const Text('Esqueceu a senha?',

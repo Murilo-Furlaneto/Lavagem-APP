@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/controller/provider/user_controller.dart';
 import 'package:lavagem_app/pages/login_page.dart';
-import '../service/firebase_service.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -13,8 +13,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   final _nomeController = TextEditingController();
-  final _service = FirebaseService();
+  final _controller = UserController();
   bool isObscure = true;
+  bool isConsultor = false;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +103,31 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     obscureText: isObscure,
                   ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: DropdownButton<bool>(
+                        value: isConsultor,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            isConsultor = newValue!;
+                          });
+                        },
+                        items: const <DropdownMenuItem<bool>>[
+                          DropdownMenuItem(
+                            value: false,
+                            child: Text('Lavador'),
+                          ),
+                          DropdownMenuItem(
+                            value: true,
+                            child: Text('Consultor'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 25),
                   SizedBox(
                     height: 50,
@@ -111,10 +137,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         backgroundColor: Colors.grey[300],
                       ),
                       onPressed: () {
-                        _service.cadastrar(
+                        _controller.cadastrarUsuario(
                             nome: _nomeController.text,
                             email: _emailController.text,
                             senha: _senhaController.text,
+                            isConsultor: isConsultor,
                             context: context);
                       },
                       child: const Text(
