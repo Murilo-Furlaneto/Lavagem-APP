@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/service/firebase_service_impl.dart';
 import 'package:lavagem_app/service/notification_service.dart';
+import 'package:lavagem_app/widgets/message_firebase_widget.dart';
 import '../models/veiculo_model.dart';
 import '../service/firebase_service.dart';
 import 'form_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.nome});
+  const HomePage({super.key, required this.nome, required this.consultor});
 
   final String nome;
+  final bool consultor;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool showContent = false;
   final _firebaseStore = FirebaseFirestore.instance.collection("veiculos");
-  final _service = FirebaseService();
+  final _service = FirebaseServiceImp();
   final _notification_service = NotificationService();
 
   @override
@@ -76,20 +79,14 @@ class _HomePageState extends State<HomePage> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      if (widget.nome.toLowerCase() == 'fabio zignari' ||
-                          widget.nome.toLowerCase() == 'fabio') {
+                      if (widget.consultor == true) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const FormPage()));
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                'Você não tem acesso a essa funcionalidade.'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
+                        SnackBarUtil.showError(context,
+                            'Você não tem acesso a essa funcionalidade.');
                       }
                     },
                     icon: const Icon(
