@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/service/firebase_service_impl.dart';
 import 'package:lavagem_app/service/notification_service.dart';
 import 'package:lavagem_app/widgets/message_firebase_widget.dart';
 import '../models/veiculo_model.dart';
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool showContent = false;
   final _firebaseStore = FirebaseFirestore.instance.collection("veiculos");
-  final _service = FirebaseService();
+  final _service = FirebaseServiceImp();
   final _notification_service = NotificationService();
 
   @override
