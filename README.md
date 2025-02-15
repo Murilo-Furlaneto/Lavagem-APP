@@ -1,6 +1,27 @@
 # lavagem_app
 
-Este projeto visa resolver o problema de organização de veículos anteriormente conduzido através do WhatsApp. A solução proposta simplifica e esclarece o processo de organização veicular para os usuários. O aplicativo oferece funcionalidades que incluem o cadastro do veículo, acompanhamento do status atual e notificações quando o veículo estiver pronto. Além disso, foram implementadas regras de segurança para restringir o acesso a um grupo selecionado de pessoas, visando evitar interferências prejudiciais ao funcionamento do sistema.
+O Lavagem App é uma solução inovadora projetada para resolver o problema de organização de veículos anteriormente conduzido através do WhatsApp. Este aplicativo simplifica e esclarece o processo de organização veicular, permitindo que os usuários cadastrem seus veículos, acompanhem o status atual e recebam notificações quando o veículo estiver pronto. Com regras de segurança implementadas, o acesso ao sistema é restrito a um grupo selecionado de pessoas, evitando interferências prejudiciais ao funcionamento.
+
+     Permite que os usuários registrem informações detalhadas sobre seus veículos.
+
+     Os usuários podem verificar o status atual do veículo em tempo real.
+
+     Receba alertas quando o veículo estiver pronto para retirada.
+
+     Acesso restrito a um grupo específico de usuários, garantindo a segurança das informações e operações.
+
+O Lavagem App utiliza as seguintes tecnologias e pacotes:
+
+    Flutter
+
+    Firebase
+
+    Provider
+
+    Shared Preferences
+
+    Serviços de notificações
+    
 
 ## Telas do Dispositivo
 ![Captura de tela 2023-07-19 200208](https://github.com/Murilo-Furlaneto/Lavagem-APP/assets/64844221/2b7d2b0c-ef46-4ccf-a48a-d2d8c4e53ffd)
