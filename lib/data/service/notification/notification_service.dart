@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:lavagem_app/data/enum/enum_status.dart';
+import 'package:lavagem_app/models/veiculo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/veiculo_model.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  void verificarFinalizado(VeiculoModel veiculoModel) async {
+  void verificarFinalizado(Veiculo veiculoModel) async {
     if (veiculoModel.status == Status.finalizado) {
       final prefs = await SharedPreferences.getInstance();
       final veiculosFinalizados =

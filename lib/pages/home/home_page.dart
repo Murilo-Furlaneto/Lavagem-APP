@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/service/firebase_service_impl.dart';
-import 'package:lavagem_app/service/notification_service.dart';
+import 'package:lavagem_app/data/enum/enum_status.dart';
+import 'package:lavagem_app/data/service/notification/notification_service.dart';
 import 'package:lavagem_app/widgets/message_firebase_widget.dart';
-import '../models/veiculo_model.dart';
-import '../service/firebase_service.dart';
-import 'form_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/veiculo_model.dart';
+import '../veiculos/veiculos_form_page.dart';
+import 'package:lavagem_app/controller/veiculo_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.nome, required this.consultor});
@@ -20,22 +19,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool showContent = false;
-  final _firebaseStore = FirebaseFirestore.instance.collection("veiculos");
-  final _service = FirebaseServiceImp();
-  final _notification_service = NotificationService();
+  final _notificationService = NotificationService();
+  final _veiculoController = VeiculoController();
 
   @override
   void initState() {
     boasVindas();
     super.initState();
-    _firebaseStore.snapshots();
-    verificarVeiculosFinalizados();
-  }
-
-  void verificarVeiculosFinalizados() async {
-    final prefs = await SharedPreferences.getInstance();
-    final veiculosFinalizados =
-        prefs.getStringList('veiculos_finalizados') ?? [];
+    _veiculoController.verificarVeiculosFinalizados();
   }
 
   Future boasVindas() async {
@@ -109,7 +100,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: showContent
           ? StreamBuilder(
-              stream: _firebaseStore.snapshots(),
+              stream: _service.retornaListaVeiculos(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
@@ -137,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                               snap[index]['status'] ?? 'cadastrando'),
                           observacao: snap[index]['observacao']);
 
-                      _notification_service.verificarFinalizado(veiculoModel);
+                      _notificationService.verificarFinalizado(veiculoModel);
                       return Card(
                         color: veiculoModel.status.color,
                         child: ListTile(
@@ -168,32 +159,28 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.orange,
                                     )),
                                 IconButton(
-                                    onPressed: () async {
-                                      if (widget.nome.toLowerCase() ==
-                                              'fabio zignari' ||
-                                          widget.nome.toLowerCase() ==
-                                              'fabio') {
-                                        _firebaseStore
-                                            .doc(veiculoModel.id)
-                                            .delete();
-                                        await _notification_service
-                                            .removerVeiculoFinalizado(
-                                                veiculoModel.placa);
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Você não tem acesso a essa funcionalidade.'),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    )),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () async {
+                                    if (widget.consultor == true) {
+                                      _service.deletarVeiculos(veiculoModel.id);
+                                      await _notificationService
+                                          .removerVeiculoFinalizado(
+                                              veiculoModel.placa);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Você não tem acesso a essa funcionalidade.'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
                               ],
                             ),
                           ),

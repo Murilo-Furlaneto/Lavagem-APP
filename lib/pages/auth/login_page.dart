@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/controller/provider/user_controller.dart';
-import 'package:lavagem_app/pages/sign_up_page.dart';
-
-import '../service/firebase_service.dart';
+import 'package:lavagem_app/data/service/get_it/init_getit.dart';
+import 'package:lavagem_app/data/service/validation/user_validation.dart';
+import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
+import 'package:lavagem_app/pages/auth/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.userViewModel});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
+  final UserViewModel userViewModel;
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
-  final _nomeController = TextEditingController();
-  final _controller = UserController();
   bool isObscure = true;
 
   @override
@@ -23,12 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            10,
-            80,
-            10,
-            10,
-          ),
+          padding: const EdgeInsets.fromLTRB(10, 80, 10, 10),
           child: SingleChildScrollView(
             child: SizedBox(
               child: Column(
@@ -44,28 +40,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _nomeController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        hintText: 'Nome completo',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'O campo precisa ser preenchido';
-                        } else if (value.length < 4) {
-                          return 'O campo senha precisa conter mais que 4 caracteres';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
@@ -115,12 +89,23 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[300],
                       ),
-                      onPressed: () {
-                        _controller.login(
-                            nome: _nomeController.text,
-                            email: _emailController.text,
-                            senha: _senhaController.text,
-                            context: context);
+                      onPressed: () async {
+                        try {
+                          final emailValidate = UserValidation.validateEmail(
+                              _emailController.text);
+                          final passwordValidate =
+                              UserValidation.validatePassword(
+                                  _senhaController.text);
+                          if (emailValidate != null || passwordValidate != null)
+                            await widget.userViewModel
+                                .login(emailValidate!, passwordValidate!);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         'Entrar',
@@ -136,9 +121,17 @@ class _LoginPageState extends State<LoginPage> {
                     height: 8,
                   ),
                   TextButton(
-                      onPressed: () {
-                        _controller.resetarSenha(
-                            email: _emailController.text, context: context);
+                      onPressed: () async {
+                        try {
+                          await widget.userViewModel
+                              .resetarSenha(_emailController.text);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                            ),
+                          );
+                        }
                       },
                       child: const Text('Esqueceu a senha?',
                           style: TextStyle(color: Colors.red, fontSize: 15))),

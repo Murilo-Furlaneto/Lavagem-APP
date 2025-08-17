@@ -1,34 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:lavagem_app/data/enum/enum_status.dart';
 
-enum Status {
-  cadastrado,
-  lavando,
-  finalizado,
-}
-
-extension StatusExtension on Status {
-  Color get color {
-    switch (this) {
-      case Status.cadastrado:
-        return const Color(0xff717C89);
-      case Status.lavando:
-        return const Color(0xffE3DBDB);
-      case Status.finalizado:
-        return const Color(0xff90BAAD);
-      default:
-        return Colors.white;
-    }
-  }
-}
-
-class VeiculoModel {
+class Veiculo {
   final String id;
   final String modelo;
   final String placa;
   final String cor;
   final Status status;
   final String? observacao;
-  VeiculoModel({
+  Veiculo({
     required this.id,
     required this.modelo,
     required this.placa,
@@ -36,4 +15,27 @@ class VeiculoModel {
     required this.status,
     this.observacao,
   });
+
+  factory Veiculo.fromJson(Map<String, dynamic> json) {
+    return Veiculo(
+      id: json['id'] as String,
+      modelo: json['modelo'] as String,
+      placa: json['placa'] as String,
+      cor: json['cor'] as String,
+      status: Status.values
+          .firstWhere((e) => e.toString() == 'Status.${json['status']}'),
+      observacao: json['observacao'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'modelo': modelo,
+      'placa': placa,
+      'cor': cor,
+      'status': status.toString().split('.').last,
+      'observacao': observacao,
+    };
+  }
 }

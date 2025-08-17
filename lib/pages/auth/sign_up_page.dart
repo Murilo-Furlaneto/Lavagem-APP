@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/controller/provider/user_controller.dart';
-import 'package:lavagem_app/pages/login_page.dart';
+import 'package:lavagem_app/data/enum/enum_funcao.dart';
+import 'package:lavagem_app/data/service/get_it/init_getit.dart';
+import 'package:lavagem_app/data/service/validation/user_validation.dart';
+import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
+import 'package:lavagem_app/pages/auth/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -13,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   final _nomeController = TextEditingController();
-  final _controller = UserController();
+  final _userViewModel = getIt<UserViewModel>();
   bool isObscure = true;
   bool isConsultor = false;
 
@@ -22,12 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            10,
-            80,
-            10,
-            10,
-          ),
+          padding: const EdgeInsets.fromLTRB(10, 80, 10, 10),
           child: SingleChildScrollView(
             child: SizedBox(
               child: Column(
@@ -42,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -137,12 +136,26 @@ class _SignUpPageState extends State<SignUpPage> {
                         backgroundColor: Colors.grey[300],
                       ),
                       onPressed: () {
-                        _controller.cadastrarUsuario(
+                        final usuario = UserModel(
                             nome: _nomeController.text,
                             email: _emailController.text,
                             senha: _senhaController.text,
-                            isConsultor: isConsultor,
-                            context: context);
+                            funcao: isConsultor
+                                ? UserFuncao.consultor
+                                : UserFuncao.lavador);
+
+                        final validationError = UserValidation.validate(usuario);
+
+                        if (validationError == null) {
+                          _userViewModel.cadastrarUsuario(usuario);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(validationError),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         'Cadastrar',
@@ -159,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                                builder: (context) =>  LoginPage(userViewModel: _userViewModel,)),
                             (route) => false);
                       },
                       child: const Text('Já possui cadastro? Faça login',

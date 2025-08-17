@@ -1,16 +1,18 @@
 import 'dart:convert';
 
+import 'package:lavagem_app/data/enum/enum_funcao.dart';
+
 class UserModel {
   final String nome;
   final String email;
   final String senha;
-  final bool isConsultor;
+  final UserFuncao funcao;
 
   UserModel({
     required this.nome,
     required this.email,
     required this.senha,
-    required this.isConsultor,
+    required this.funcao,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,7 +20,7 @@ class UserModel {
       'nome': nome,
       'email': email,
       'senha': senha,
-      'consultor': isConsultor,
+      'funcao': funcao.toString(),
     };
   }
 
@@ -27,7 +29,7 @@ class UserModel {
       nome: map['nome'] as String,
       email: map['email'] as String,
       senha: map['senha'] as String,
-      isConsultor: map['consultor'] as bool,
+      funcao: UserFuncao.values.firstWhere((e) => e.toString() == map['funcao']),
     );
   }
 
@@ -38,6 +40,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(nome: $nome, email: $email, senha: $senha, consultor: $isConsultor)';
+    return 'UserModel(nome: $nome, email: $email, senha: $senha, funcao: $funcao)';
   }
 }

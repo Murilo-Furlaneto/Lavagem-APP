@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lavagem_app/models/veiculo_model.dart';
 
-import '../models/veiculo_model.dart';
-
-class FormPage extends StatefulWidget {
-  const FormPage({super.key, this.veiculoModel});
+class VeiculosFormPage extends StatefulWidget {
+  const VeiculosFormPage({super.key, this.veiculoModel});
 
   final VeiculoModel? veiculoModel;
 
   @override
-  State<FormPage> createState() => _FormPageState();
+  State<VeiculosFormPage> createState() => VeiculosFormPageState();
 }
 
-class _FormPageState extends State<FormPage> {
+class VeiculosFormPageState extends State<VeiculosFormPage> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {};
   final _firebaseStore = FirebaseFirestore.instance.collection("veiculos");

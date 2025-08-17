@@ -1,0 +1,4 @@
+enum UserFuncao {
+  consultor,
+  lavador,
+}

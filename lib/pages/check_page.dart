@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/controller/provider/user_controller.dart';
-
-import 'home_page.dart';
-import 'sign_up_page.dart';
+import 'package:lavagem_app/data/service/get_it/init_getit.dart';
+import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
 
 class CheckPage extends StatefulWidget {
   const CheckPage({super.key});
@@ -15,17 +11,16 @@ class CheckPage extends StatefulWidget {
 }
 
 class _CheckPageState extends State<CheckPage> {
-
   StreamSubscription? streamSubscription;
 
   @override
   void initState() {
     super.initState();
-    hasUser();
+    verifiaUsuarioLogado();
   }
 
-  hasUser() {
-    UserController().hasUser(context);
+  verifiaUsuarioLogado() {
+    getIt<UserViewModel>().verificaSeExisteUsuario();
   }
 
   @override
