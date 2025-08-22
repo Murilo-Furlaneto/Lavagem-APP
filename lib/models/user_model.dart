@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lavagem_app/data/enum/enum_funcao.dart';
+import 'package:lavagem_app/data/enum/enum_role.dart';
 
 class UserModel {
   final String nome;

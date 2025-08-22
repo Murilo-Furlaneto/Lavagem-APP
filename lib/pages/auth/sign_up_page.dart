@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/data/enum/enum_funcao.dart';
+import 'package:lavagem_app/data/enum/enum_role.dart';
 import 'package:lavagem_app/data/service/get_it/init_getit.dart';
 import 'package:lavagem_app/data/service/validation/user_validation.dart';
 import 'package:lavagem_app/models/user_model.dart';

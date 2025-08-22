@@ -5,7 +5,7 @@ import 'package:lavagem_app/models/veiculo_model.dart';
 class VeiculosFormPage extends StatefulWidget {
   const VeiculosFormPage({super.key, this.veiculoModel});
 
-  final VeiculoModel? veiculoModel;
+  final Veiculo? veiculoModel;
 
   @override
   State<VeiculosFormPage> createState() => VeiculosFormPageState();
@@ -26,7 +26,7 @@ class VeiculosFormPageState extends State<VeiculosFormPage> {
     return menuItems;
   }
 
-  _loadFormData(VeiculoModel car) {
+  _loadFormData(Veiculo car) {
     _formData['modelo'] = car.modelo;
     _formData['placa'] = car.placa;
     _formData['cor'] = car.cor;

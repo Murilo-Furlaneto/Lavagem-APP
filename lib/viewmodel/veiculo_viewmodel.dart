@@ -1,30 +1,41 @@
 import 'package:flutter/foundation.dart';
-import 'package:lavagem_app/data/enum/enum_status.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:lavagem_app/data/repository/veiculo_repository.dart';
+import 'package:lavagem_app/models/veiculo_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VeiculoViewModel extends ChangeNotifier {
-  void atualizarStatus(Status novoStatus, String veiculoId) async {
-    if (novoStatus == Status.finalizado) {
-      final prefs = await SharedPreferences.getInstance();
-      final veiculosFinalizados =
-          prefs.getStringList('veiculos_finalizados') ?? [];
+  final VeiculoRepository _repository;
 
-      if (!veiculosFinalizados.contains(veiculoId)) {
-        veiculosFinalizados.add(veiculoId);
-        await prefs.setStringList('veiculos_finalizados', veiculosFinalizados);
-      }
-    }
-     notifyListeners();
+  VeiculoViewModel(this._repository);
+
+  final ValueNotifier<Veiculo?> veiculoNotifier = ValueNotifier(null);
+
+  Stream<QuerySnapshot> getVeiculosStream() {
+    return _repository.getVeiculosStream();
   }
 
-  Future<List<String>> getVeiculosFinalizados() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList('veiculos_finalizados') ?? [];
+  Future<void> deletarVeiculo(String id) async {
+    await _repository.deletarVeiculo(id);
+    notifyListeners();
   }
 
-  Future<bool> isVeiculoFinalizado(String veiculoId) async {
-    final veiculosFinalizados = await getVeiculosFinalizados();
-    return veiculosFinalizados.contains(veiculoId);
+  Future<void> cadastrarVeiculo(Veiculo veiculo) async {
+    await _repository.cadastrarVeiculo(veiculo);
+    notifyListeners();
+  }
+
+  Future<void> editarVeiculo(Veiculo veiculo) async {
+    await _repository.editarVeiculo(veiculo);
+    veiculoNotifier.value = veiculo; 
+    notifyListeners();
+  }
+
+  Future<void> atualizarStatus(String veiculoId, String novoStatus) async {
+    await _repository.atualizarStatus(veiculoId, novoStatus);
+    notifyListeners();
+  }
+
+  void selecionarVeiculo(Veiculo? veiculo) {
+    veiculoNotifier.value = veiculo;
   }
 }

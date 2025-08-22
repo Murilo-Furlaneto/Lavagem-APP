@@ -9,6 +9,9 @@ class UserViewModel extends ChangeNotifier {
   UserViewModel({required UserRepository userRepository})
       : _userRepository = userRepository;
 
+  final ValueNotifier<UserModel?> usuarioNotifier = ValueNotifier(null);
+   UserModel get usuario => usuarioNotifier.value!;
+
   Future<void> resetarSenha(String email) async {
     await _userRepository.resetarSenha(email);
   }
@@ -21,7 +24,11 @@ class UserViewModel extends ChangeNotifier {
     await _userRepository.login(email,senha);
   }
 
-  Future<void> verificaSeExisteUsuario() async {
-    await _userRepository.verificaSeExisteUsuario();
+  Future<bool> verificaSeExisteUsuario() async {
+    return await _userRepository.verificaSeExisteUsuario();
+  }
+
+  Future<UserModel> obterUsuario() async {
+    return await _userRepository.obterUsuario();
   }
 }

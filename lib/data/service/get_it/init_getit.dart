@@ -13,7 +13,7 @@ final getIt = GetIt.instance;
 void setupLocator() {
   getIt.registerSingleton<UserRepository>(UserRepository(userService:  getIt.get<UserService>()));
   getIt.registerSingleton<VeiculoRepository>(VeiculoRepository(VeiculoService()));
-  getIt.registerSingleton<VeiculoViewModel>(VeiculoViewModel());
+  getIt.registerSingleton<VeiculoViewModel>(VeiculoViewModel(getIt.get<VeiculoRepository>()));
   getIt.registerSingleton(FirebaseAuth.instance);
   getIt.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   getIt.registerSingleton<UserViewModel>(UserViewModel(userRepository: getIt.get<UserRepository>()));

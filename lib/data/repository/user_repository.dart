@@ -31,14 +31,29 @@ class UserRepository {
     await _userService.logOut();
   }
 
-  Future<void> verificaSeExisteUsuario() async {
+  Future<bool> verificaSeExisteUsuario() async {
     final prefs = await SharedPreferences.getInstance();
     final usuarioLogado = prefs.getString(_keyUsuarioLogado);
     if (usuarioLogado != null) {
       final userModel = UserModel.fromJson(usuarioLogado);
       log("Usuário logado: ${userModel.nome}");
+      return true;
     } else {
       log("Nenhum usuário logado.");
+      return false;
+    }
+  }
+
+  Future<UserModel> obterUsuario() async {
+    final prefs = await SharedPreferences.getInstance();
+    final usuarioLogado = prefs.getString(_keyUsuarioLogado);
+    if (usuarioLogado != null) {
+      final userModel = UserModel.fromJson(usuarioLogado);
+      log("Usuário logado: ${userModel.nome}");
+      return userModel;
+    } else {
+      log("Nenhum usuário logado.");
+      throw Exception("Usuário não encontrado.");
     }
   }
 }

@@ -1,5 +1,0 @@
-
-enum UserRole {
-  consultor,
-  lavador,
-}
