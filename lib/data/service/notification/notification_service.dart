@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:lavagem_app/data/enum/enum_status.dart';
-import 'package:lavagem_app/models/veiculo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../domain/models/veiculo_model.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =

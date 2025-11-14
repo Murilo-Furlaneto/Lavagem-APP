@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart';
+import 'package:lavagem_app/data/database/app_database.dart';
 import 'package:lavagem_app/data/enum/enum_role.dart';
 
 class UserModel {
   final String nome;
   final String email;
   final String senha;
-  final UserFuncao funcao;
+  final UserRole funcao;
 
   UserModel({
     required this.nome,
@@ -29,7 +31,7 @@ class UserModel {
       nome: map['nome'] as String,
       email: map['email'] as String,
       senha: map['senha'] as String,
-      funcao: UserFuncao.values.firstWhere((e) => e.toString() == map['funcao']),
+      funcao: UserRole.values.firstWhere((e) => e.toString() == map['funcao']),
     );
   }
 
@@ -41,5 +43,15 @@ class UserModel {
   @override
   String toString() {
     return 'UserModel(nome: $nome, email: $email, senha: $senha, funcao: $funcao)';
+  }
+
+  UsersCompanion toCompanion() {
+    return UsersCompanion(
+      uid: const Value.absent(),
+      nome: Value(nome),
+      email: Value(email),
+      funcao: Value(funcao.toString()),
+      isLoggedIn: const Value.absent()
+    );
   }
 }

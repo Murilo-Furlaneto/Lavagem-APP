@@ -2,22 +2,16 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:lavagem_app/data/service/get_it/init_getit.dart';
-import 'package:lavagem_app/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lavagem_app/di/init_getit.dart';
+import 'package:lavagem_app/domain/models/user_model.dart';
+import 'package:lavagem_app/domain/repository/user_repository.dart';
 
 class UserService {
-  static final String _keyUsuarioLogado = dotenv.get('USUARIO_LOGADO_KEY');
-
-
   Future<void> resetarSenha(String email) async {
     await getIt<FirebaseAuth>().sendPasswordResetEmail(email: email);
   }
 
   Future<void> cadastrar(UserModel usuario) async {
-    final prefs = await SharedPreferences.getInstance();
-
     try {
       await verificarEmail(usuario.email);
 
@@ -36,7 +30,7 @@ class UserService {
           .doc(userCredential.user!.uid)
           .set(userData);
 
-      prefs.setString(_keyUsuarioLogado, usuario.toJson());
+      await getIt<UserRepository>().salvarUsuario(usuario);
     } catch (e, stackTrace) {
       log(
         "Erro ao cadastrar usuário.",
@@ -103,9 +97,6 @@ class UserService {
     await getIt<FirebaseAuth>().signOut();
   }
 
-  
-
-  
   /* getIt<FirebaseAuth>().authStateChanges().listen((User? user) async {
       if (user == null) {
         log("Usuário não autenticado.");

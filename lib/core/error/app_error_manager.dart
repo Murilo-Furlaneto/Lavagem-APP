@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-import 'package:lavagem_app/core/theme/error/app_error.dart';
+import 'package:lavagem_app/core/error/app_error.dart';
 import 'package:lavagem_app/data/enum/enum_type_error.dart';
 
 class AppErrorManager {
@@ -44,23 +44,22 @@ class AppErrorManager {
   }
 
   void _logDetailedError(AppError error) {
-    print('\n===== ERRO DETALHADO =====');
-    print('Timestamp: ${error.timestamp}');
-    print('Classe: ${error.className}');
-    print('Tipo: ${error.type.name.toUpperCase()}');
-    print('Mensagem: ${error.message}');
+    log('\n===== ERRO DETALHADO =====');
+    log('Timestamp: ${error.timestamp}');
+    log('Classe: ${error.className}');
+    log('Tipo: ${error.type.name.toUpperCase()}');
+    log('Mensagem: ${error.message}');
 
     if (error.additionalData?.isNotEmpty ?? false) {
-      print('Dados Adicionais: ${error.additionalData}');
+      log('Dados Adicionais: ${error.additionalData}');
     }
 
     if (error.originalException != null) {
-      print('Exceção Original: ${error.originalException}');
+      log('Exceção Original: ${error.originalException}');
     }
 
-    print('Stack Trace:');
-    print(error.stackTrace);
-    print('=======================\n');
+    log('Stack Trace: ${error.stackTrace}}');
+    log('=======================\n');
   }
 
   void logNetworkError({

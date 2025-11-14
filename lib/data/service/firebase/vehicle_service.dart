@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:lavagem_app/core/theme/error/app_error_manager.dart';
-import 'package:lavagem_app/data/service/get_it/init_getit.dart';
-import 'package:lavagem_app/models/veiculo_model.dart';
+import 'package:lavagem_app/core/error/app_error_manager.dart';
+import 'package:lavagem_app/di/init_getit.dart';
+import 'package:lavagem_app/domain/models/veiculo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class VeiculoService {
+class VehicleService {
   static final String _keyVeiculosFinalizados =
       dotenv.get('VEICULOS_FINALIZADOS_KEY');
   final AppErrorManager _errorManager = AppErrorManager();
@@ -98,24 +98,10 @@ class VeiculoService {
     }
   }
 
-  Future<List<String>> getVeiculosFinalizados() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      return prefs.getStringList(_keyVeiculosFinalizados) ?? [];
-    } catch (e, stackTrace) {
-      _errorManager.logFirebaseError(
-        message: "Erro ao obter veículos finalizados.",
-        className: "VeiculoService",
-        originalException: Exception("Erro ao obter veículos finalizados: ${e.toString()}"),
-        stackTrace: stackTrace,
-      );
-      return [];
-    }
-  }
 
-  Future<bool> isVeiculoFinalizado(String veiculoId) async {
+  Future<bool> verificarVeiculoFinalizado(String veiculoId) async {
     try {
-      final veiculosFinalizados = await getVeiculosFinalizados();
+      final veiculosFinalizados = await retornarVeiculosFinalizados();
       return veiculosFinalizados.contains(veiculoId);
     } catch (e, stackTrace) {
       _errorManager.logFirebaseError(
@@ -145,9 +131,9 @@ class VeiculoService {
     }
   }
 
-  Future<List<Veiculo>> retornaVeiculosFinalizados() async {
+  Future<List<Veiculo>> retornarVeiculosFinalizados() async {
     try {
-      final veiculosFinalizados = await getVeiculosFinalizados();
+      final veiculosFinalizados = await retornarVeiculosFinalizados();
 
       var lista = getIt<FirebaseFirestore>().collection("veiculos");
       var snapshot = await lista.get();
@@ -171,7 +157,7 @@ class VeiculoService {
     }
   }
 
-  Stream<QuerySnapshot> getVeiculosStream() {
+  Stream<QuerySnapshot> retornarVeiculosStream() {
     try {
       return getIt<FirebaseFirestore>().collection("veiculos").snapshots();
     } catch (e, stackTrace) {

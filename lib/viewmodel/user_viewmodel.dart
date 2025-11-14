@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/data/repository/user_repository.dart';
-import 'package:lavagem_app/data/service/get_it/init_getit.dart';
-import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/domain/models/user_model.dart';
+import 'package:lavagem_app/domain/repository/user_repository.dart';
 
 class UserViewModel extends ChangeNotifier {
   final UserRepository _userRepository;
@@ -28,7 +27,7 @@ class UserViewModel extends ChangeNotifier {
     return await _userRepository.verificaSeExisteUsuario();
   }
 
-  Future<UserModel> obterUsuario() async {
+  Future<UserModel?> obterUsuario() async {
     return await _userRepository.obterUsuario();
   }
 }

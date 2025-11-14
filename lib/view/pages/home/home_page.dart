@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lavagem_app/data/enum/enum_status.dart';
 import 'package:lavagem_app/data/service/notification/notification_service.dart';
-import 'package:lavagem_app/models/veiculo_model.dart';
-import 'package:lavagem_app/pages/veiculos/veiculos_form_page.dart';
+import 'package:lavagem_app/domain/models/veiculo_model.dart';
+import 'package:lavagem_app/view/pages/veiculos/veiculos_form_page.dart';
 import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/viewmodel/veiculo_viewmodel.dart';
-import 'package:lavagem_app/widgets/message_firebase_widget.dart';
-import 'package:lavagem_app/widgets/veiculo_card.dart';
+import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/widgets/veiculo_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -16,7 +15,7 @@ class HomePage extends StatefulWidget {
     required this.userViewModel,
   });
 
-  final VeiculoViewModel veiculoViewModel;
+  final VehicleViewModel veiculoViewModel;
   final UserViewModel userViewModel;
   @override
   State<HomePage> createState() => _HomePageState();
@@ -94,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: widget.veiculoViewModel.getVeiculosStream(),
+        stream: widget.veiculoViewModel.retornarVeiculosStream(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

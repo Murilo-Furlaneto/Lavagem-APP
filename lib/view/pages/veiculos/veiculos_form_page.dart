@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/models/veiculo_model.dart';
+import 'package:lavagem_app/domain/models/veiculo_model.dart';
 
 class VeiculosFormPage extends StatefulWidget {
   const VeiculosFormPage({super.key, this.veiculoModel});

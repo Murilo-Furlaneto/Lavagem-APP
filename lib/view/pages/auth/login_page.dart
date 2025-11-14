@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lavagem_app/data/service/get_it/init_getit.dart';
-import 'package:lavagem_app/data/service/validation/user_validation.dart';
-import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/data/helper/validation/user_validation.dart';
 import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/pages/auth/sign_up_page.dart';
+import 'package:lavagem_app/view/pages/auth/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.userViewModel});
@@ -91,14 +89,15 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () async {
                         try {
-                          final emailValidate = UserValidation.validateEmail(
+                          final emailValidate = UserValidation.validarEmail(
                               _emailController.text);
                           final passwordValidate =
-                              UserValidation.validatePassword(
+                              UserValidation.validarSenha(
                                   _senhaController.text);
-                          if (emailValidate != null || passwordValidate != null)
+                          if (emailValidate != null || passwordValidate != null) {
                             await widget.userViewModel
                                 .login(emailValidate!, passwordValidate!);
+                          }
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

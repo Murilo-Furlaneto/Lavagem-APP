@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lavagem_app/data/enum/enum_role.dart';
-import 'package:lavagem_app/data/service/get_it/init_getit.dart';
-import 'package:lavagem_app/data/service/validation/user_validation.dart';
-import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/data/helper/validation/user_validation.dart';
+import 'package:lavagem_app/di/init_getit.dart';
+import 'package:lavagem_app/domain/models/user_model.dart';
 import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/pages/auth/login_page.dart';
+import 'package:lavagem_app/view/pages/auth/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -141,10 +141,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             email: _emailController.text,
                             senha: _senhaController.text,
                             funcao: isConsultor
-                                ? UserFuncao.consultor
-                                : UserFuncao.lavador);
+                                ? UserRole.consultor
+                                : UserRole.lavador);
 
-                        final validationError = UserValidation.validate(usuario);
+                        final validationError = UserValidation.validar(usuario);
 
                         if (validationError == null) {
                           _userViewModel.cadastrarUsuario(usuario);

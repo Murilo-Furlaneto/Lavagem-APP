@@ -1,7 +1,7 @@
-import 'package:lavagem_app/models/user_model.dart';
+import 'package:lavagem_app/domain/models/user_model.dart';
 
 class UserValidation {
-  static String? validate(UserModel user) {
+  static String? validar(UserModel user) {
     if (user.nome.isEmpty) {
       return 'O nome não pode estar vazio.';
     } else if (user.nome.length < 3) {
@@ -12,24 +12,20 @@ class UserValidation {
       return 'O nome não pode conter caracteres especiais.';
     }
     
-    final emailError = validateEmail(user.email);
+    final emailError = validarEmail(user.email);
     if (emailError != null) {
       return emailError;
     }
 
-    final passwordError = validatePassword(user.senha);
+    final passwordError = validarSenha(user.senha);
     if (passwordError != null) {
       return passwordError;
-    }
-
-    if (user.funcao == null) {
-      return 'A função não pode ser nula.';
     }
 
     return null; 
   }
 
-  static String? validateEmail(String email) {
+  static String? validarEmail(String email) {
     if (email.isEmpty) {
       return 'O email não pode estar vazio.';
     } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
@@ -38,7 +34,7 @@ class UserValidation {
     return null; 
   }
 
-  static String? validatePassword(String password) {
+  static String? validarSenha(String password) {
     if (password.isEmpty) {
       return 'A senha não pode estar vazia.';
     } else if (password.length < 6) {
