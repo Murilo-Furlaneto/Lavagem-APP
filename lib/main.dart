@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lavagem_app/di/init_getit.dart';
 import 'package:lavagem_app/domain/repository/vehicle_repository.dart';
-import 'package:lavagem_app/view/pages/auth/sign_up_page.dart';
-import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/features/auth/pages/sign_up_page.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 

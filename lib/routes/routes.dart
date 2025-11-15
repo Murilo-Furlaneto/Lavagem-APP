@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lavagem_app/di/init_getit.dart';
-import 'package:lavagem_app/view/pages/auth/login_page.dart';
-import 'package:lavagem_app/view/pages/auth/sign_up_page.dart';
-import 'package:lavagem_app/view/pages/home/home_page.dart';
-import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/features/auth/pages/login_page.dart';
+import 'package:lavagem_app/view/features/auth/pages/sign_up_page.dart';
+import 'package:lavagem_app/view/features/home/pages/home_page.dart';
+import 'package:lavagem_app/view/features/auth/view_model/user_viewmodel.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
 
 class Routes {
   static const String home = '/';
