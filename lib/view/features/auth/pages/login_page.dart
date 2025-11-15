@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lavagem_app/data/helper/validation/user_validation.dart';
-import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/view/pages/auth/sign_up_page.dart';
+import 'package:lavagem_app/view/features/auth/view_model/user_viewmodel.dart';
+import 'package:lavagem_app/view/features/auth/pages/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.userViewModel});

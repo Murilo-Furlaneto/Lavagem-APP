@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lavagem_app/core/theme/theme.dart';
 import 'package:lavagem_app/data/service/notification/notification_service.dart';
 import 'package:lavagem_app/domain/models/veiculo_model.dart';
-import 'package:lavagem_app/view/pages/veiculos/veiculos_form_page.dart';
-import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/features/veiculos/pages/veiculos_form_page.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
 
 class VeiculoCard extends StatelessWidget {
   const VeiculoCard({super.key, 

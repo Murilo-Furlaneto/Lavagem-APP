@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lavagem_app/di/init_getit.dart';
 import 'package:lavagem_app/routes/routes.dart';
-import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
+import 'package:lavagem_app/view/features/auth/view_model/user_viewmodel.dart';
 
 class CheckPage extends StatefulWidget {
   const CheckPage({super.key});

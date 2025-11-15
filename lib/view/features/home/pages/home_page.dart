@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lavagem_app/data/enum/enum_status.dart';
 import 'package:lavagem_app/data/service/notification/notification_service.dart';
 import 'package:lavagem_app/domain/models/veiculo_model.dart';
-import 'package:lavagem_app/view/pages/veiculos/veiculos_form_page.dart';
-import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
-import 'package:lavagem_app/view/widgets/veiculo_card.dart';
+import 'package:lavagem_app/view/features/veiculos/pages/veiculos_form_page.dart';
+import 'package:lavagem_app/view/features/auth/view_model/user_viewmodel.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/features/veiculos/pages/widgets/veiculo_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

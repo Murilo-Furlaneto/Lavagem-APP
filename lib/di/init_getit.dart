@@ -8,8 +8,8 @@ import 'package:lavagem_app/data/datasource/remote/vehicle_remote_data_source.da
 import 'package:lavagem_app/data/helper/database/user_database_helper.dart';
 import 'package:lavagem_app/domain/repository/user_repository.dart';
 import 'package:lavagem_app/domain/repository/vehicle_repository.dart';
-import 'package:lavagem_app/viewmodel/user_viewmodel.dart';
-import 'package:lavagem_app/viewmodel/vehicle_viewmodel.dart';
+import 'package:lavagem_app/view/features/auth/view_model/user_viewmodel.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
 import 'package:lavagem_app/data/repository/user_repository_impl.dart';
 import 'package:lavagem_app/data/repository/vehicle_repository_impl.dart';
 import 'package:lavagem_app/data/service/firebase/user_service.dart';
