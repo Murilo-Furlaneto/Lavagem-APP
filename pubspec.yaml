@@ -43,6 +43,13 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.2.0
   firebase_messaging: ^14.6.5
+  sqflite: ^2.4.2
+  get_it: ^8.0.3
+  flutter_dotenv: ^5.2.1
+  drift: ^2.29.0
+  sqlite3_flutter_libs: ^0.5.40
+  path_provider: ^2.1.5
+  path: ^1.9.1
 
   
 
@@ -56,6 +63,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  drift_dev: ^2.29.0
+  build_runner: ^2.9.0
 flutter_icons:
   android: true
   ios: true

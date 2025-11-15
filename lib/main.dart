@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:lavagem_app/controller/provider/veiculo_controller.dart';
-import 'package:lavagem_app/pages/sign_up_page.dart';
+import 'package:lavagem_app/di/init_getit.dart';
+import 'package:lavagem_app/domain/repository/vehicle_repository.dart';
+import 'package:lavagem_app/view/features/auth/pages/sign_up_page.dart';
+import 'package:lavagem_app/view/features/veiculos/viewmodel/vehicle_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -10,18 +12,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  setupLocator();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => VeiculoController())],
+      providers: [ChangeNotifierProvider(create: (_) => VehicleViewModel(getIt<VehicleRepository>()))],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Lavagem App',

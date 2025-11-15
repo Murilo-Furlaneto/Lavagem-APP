@@ -46,3 +46,5 @@ app.*.map.json
 
 #dart
 firebase_options.dart
+db_sqlite.dart
+*.env
